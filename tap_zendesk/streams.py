@@ -285,8 +285,6 @@ class Tickets(Stream):
 
         start_time = datetime.datetime.now()
         for idx, ticket in enumerate(tickets):
-            LOGGER.info(f"Ticket (id:{idx}): {datetime.datetime.utcfromtimestamp(ticket.generated_timestamp).replace(tzinfo=pytz.UTC)}")
-
             zendesk_metrics.capture('ticket')
 
             ticket_dict = ticket.to_dict()
