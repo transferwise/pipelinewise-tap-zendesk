@@ -195,22 +195,15 @@ def get_session(config):
     return session
 
 
-def get_internal_config():
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'internal_config.json')) as f:
-        config = json.loads(f.read())
-
-    return config
-
 @singer.utils.handle_top_exception(LOGGER)
 def main():
-    internal_config = get_internal_config()
     parsed_args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
 
     # OAuth has precedence
     creds = oauth_auth(parsed_args) or api_token_auth(parsed_args)
     session = get_session(parsed_args.config)
-    client = Zenpy(session=session, ratelimit=internal_config['rate_limit'], **creds)
-    client.internal_config = internal_config
+    client = Zenpy(session=session, ratelimit=parsed_args.config['rate_limit'], **creds)
+    client.internal_config = {k: v for k, v in parsed_args.config.items() if k in ['max_workers', 'batch_size']}
 
     add_session_hooks(client.tickets.session)
 
