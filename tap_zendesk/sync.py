@@ -7,7 +7,7 @@ import singer.metrics as metrics
 from singer import metadata
 from singer import Transformer
 
-LOGGER = singer.get_logger()
+LOGGER = singer.get_logger('tap_zendesk')
 
 def process_record(record):
     """ Serializes Zenpy's internal classes into Python objects via ZendeskEncoder. """
