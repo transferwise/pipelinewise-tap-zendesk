@@ -14,7 +14,7 @@ from tap_zendesk.discover import discover_streams
 from tap_zendesk.streams import STREAMS
 from tap_zendesk.sync import sync_stream
 
-LOGGER = singer.get_logger()
+LOGGER = singer.get_logger('tap_zendesk')
 
 REQUIRED_CONFIG_KEYS = [
     "start_date",

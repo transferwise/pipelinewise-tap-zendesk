@@ -13,7 +13,7 @@ import threading
 import concurrent.futures
 
 
-LOGGER = singer.get_logger()
+LOGGER = singer.get_logger('tap_zendesk')
 KEY_PROPERTIES = ['id']
 
 CUSTOM_TYPES = {

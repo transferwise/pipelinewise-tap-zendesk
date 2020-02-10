@@ -20,8 +20,7 @@ metrics_data = {
     'window_counts': defaultdict(int)
 }
 
-LOGGER = singer.get_logger()
-LOGGER.setLevel(logging.DEBUG)
+LOGGER = singer.get_logger('tap_zendesk')
 
 def _seconds_since_datetime(dt):
     "Returns the number of seconds since DT"
