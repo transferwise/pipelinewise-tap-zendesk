@@ -1,5 +1,13 @@
-# tap-zendesk
-Tap for Zendesk
+# Pipelinewise-tap-zendesk
+
+[![PyPI version](https://badge.fury.io/py/pipelinewise-tap-zendesk.svg)](https://badge.fury.io/py/pipelinewise-tap-zendesk)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pipelinewise-tap-zendesk.svg)](https://pypi.org/project/pipelinewise-tap-zendesk/)
+[![License: MIT](https://img.shields.io/badge/License-GPLv3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
+
+[Singer](https://www.singer.io/) tap that extracts data from a Zendesk API and produces JSON-formatted data following 
+the [Singer spec](https://github.com/singer-io/getting-started/blob/master/docs/SPEC.md).
+
+This is a [PipelineWise](https://transferwise.github.io/pipelinewise) compatible tap connector.
 
 ## Installation
 
@@ -36,5 +44,3 @@ For a simplified, but less granular setup, you can use the API Token authenticat
   "start_date": "2000-01-01T00:00:00Z"
 }
 ```
-
-Copyright &copy; 2018 Stitch

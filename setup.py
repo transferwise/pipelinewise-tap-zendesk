@@ -2,11 +2,16 @@
 
 from setuptools import setup
 
+with open('README.md', 'r') as fh:
+    long_description = fh.read()
+
 setup(name='pipelinewise-tap-zendesk',
-      version='1.0.0',
+      version='1.1.0',
       description='Singer.io tap for extracting data from the Zendesk API',
-      author='Stitch',
-      url='https://singer.io',
+      long_description=long_description,
+      long_description_content_type='text/markdown',
+      author='TransferWise',
+      url='https://github.com/transferwise/pipelinewise-tap-zendesk',
       classifiers=['Programming Language :: Python :: 3 :: Only'],
       py_modules=['tap_zendesk'],
       install_requires=[
