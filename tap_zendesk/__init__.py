@@ -201,10 +201,10 @@ def get_default_config():
 
     return config
 
-def get_internal_config(parsed_args, default_config):
+def get_internal_config(user_config, default_config):
     config = {}
     for key in default_config.keys():
-        config[key] = parsed_args.get(key, default_config[key])
+        config[key] = user_config.get(key, default_config[key])
 
     return config
 
