@@ -5,7 +5,7 @@ from zenpy import Zenpy, TicketApi
 import random
 
 from zenpy.lib.api_objects import BaseObject
-from tap_zendesk import get_internal_config
+from tap_zendesk import get_default_config
 
 from tap_zendesk import LOGGER
 
@@ -23,7 +23,7 @@ class DictMock(BaseObject):
 class ZenpyMock(Zenpy):
     def __init__(self, n_tickets=1000, p_sleep=None, p_failure=None, *args, **kwargs):
         super(ZenpyMock, self).__init__(*args, **kwargs)
-        self.internal_config = get_internal_config()
+        self.internal_config = get_default_config()
 
         tickets = self.tickets
 
