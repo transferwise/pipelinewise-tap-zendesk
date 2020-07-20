@@ -30,7 +30,7 @@ jobs:
           command: |
             . ./virtualenvs/tap-zendesk/bin/activate
             export LOGGING_CONF_FILE=./sample_logging.conf
-            nosetests -c .noserc tests
+            nosetests -c .noserc test
 workflows:
   version: 2
   build:

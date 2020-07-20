@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name,missing-function-docstring,missing-class-docstring,unused-argument
 import os
 import json
 import datetime
@@ -107,12 +108,14 @@ def raise_or_log_zenpy_apiexception(schema, stream, e):
     # it doesn't have access.
     if not isinstance(e, zenpy.lib.exception.APIException):
         raise ValueError("Called with a bad exception type") from e
-    if json.loads(e.args[0])['error']['message'] == "You do not have access to this page. Please contact the account owner of this help desk for further help.":
+    if json.loads(e.args[0])['error']['message'] == "You do not have access to this page. " \
+                                                    "Please contact the account owner of this " \
+                                                    "help desk for further help.":
         LOGGER.warning("The account credentials supplied do not have access to `%s` custom fields.",
                        stream)
         return schema
-    else:
-        raise e
+
+    raise e
 
 
 class Organizations(Stream):
@@ -194,6 +197,7 @@ class Tickets(Stream):
                 yield rec
             self.buf[stream_name] = []
 
+    # pylint: disable=too-many-locals,too-many-statements
     def sync(self, state):
         bookmark = self.get_bookmark(state)
         tickets = self.client.tickets.incremental(start_time=bookmark)
@@ -221,7 +225,7 @@ class Tickets(Stream):
                             self._buffer_record(audit)
                 except RecordNotFoundException:
                     LOGGER.warning("Unable to retrieve audits for ticket (ID: %s), "
-                    "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
+                                   "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
 
         def _process_metrics(ticket_dict):
             if metrics_stream.is_selected():
@@ -232,7 +236,7 @@ class Tickets(Stream):
                             self._buffer_record(metric)
                 except RecordNotFoundException:
                     LOGGER.warning("Unable to retrieve metrics for ticket (ID: %s), "
-                    "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
+                                   "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
 
         def _process_comments(ticket_dict):
             if comments_stream.is_selected():
@@ -246,7 +250,7 @@ class Tickets(Stream):
                             self._buffer_record(comment)
                 except RecordNotFoundException:
                     LOGGER.warning("Unable to retrieve comments for ticket (ID: %s), "
-                    "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
+                                   "the Zendesk API returned a RecordNotFound error", ticket_dict["id"])
 
         AUDITS = 'audits'
         METRICS = 'metrics'
@@ -261,7 +265,7 @@ class Tickets(Stream):
         def _process_task(task):
             name, ticket_dict = task
             if name not in name_to_process_job:
-                LOGGER.error(f"Can't recognize {name} task. Should be one of {list(name_to_process_job.keys())}")
+                LOGGER.error("Can't recognise %s task. Should be one of %s", name, list(name_to_process_job.keys()))
                 return
 
             name_to_process_job[name](ticket_dict)
@@ -299,7 +303,7 @@ class Tickets(Stream):
                 execute_batch(tasks_batch)
                 tasks_batch = []
 
-                LOGGER.info(f"Processed {idx + 1} tickets. Time: {datetime.datetime.now() - start_time}")
+                LOGGER.info("Processed %i tickets. Time: %s", idx + 1, datetime.datetime.now() - start_time)
 
             if should_yield:
                 for rec in self._empty_buffer():
@@ -309,7 +313,7 @@ class Tickets(Stream):
                 emit_sub_stream_metrics(comments_stream)
                 singer.write_state(state)
 
-            LOGGER.info(f"Processed {idx + 1} tickets. Time: {datetime.datetime.now() - start_time}")
+            LOGGER.info("Processed %i tickets. Time: %s", idx + 1, datetime.datetime.now() - start_time)
 
         # Finish processing left requests
         if tasks_batch:
@@ -477,8 +481,8 @@ class GroupMemberships(Stream):
                     yield (self.stream, membership)
             else:
                 if membership.id:
-                    LOGGER.info('group_membership record with id: ' + str(membership.id) +
-                                ' does not have an updated_at field so it will be syncd...')
+                    LOGGER.info('group_membership record with id: %s'
+                                ' does not have an updated_at field so it will be syncd...', str(membership.id))
                     yield (self.stream, membership)
                 else:
                     LOGGER.info('Received group_membership record with no id or updated_at, skipping...')

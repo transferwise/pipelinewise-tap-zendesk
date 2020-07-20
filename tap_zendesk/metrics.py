@@ -1,4 +1,4 @@
-import logging
+# pylint: disable=invalid-name,missing-function-docstring
 from statistics import mean
 from collections import defaultdict
 from datetime import datetime
