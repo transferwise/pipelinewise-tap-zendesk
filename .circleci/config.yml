@@ -1,32 +1,38 @@
 version: 2
+
+references:
+  container_config: &container_config
+    docker:
+      - image: circleci/python:3.7.7
+
 jobs:
   build:
-    docker:
-      - image: 218546966473.dkr.ecr.us-east-1.amazonaws.com/circle-ci:tap-tester
+    <<: *container_config
+
     steps:
       - checkout
       - run:
           name: 'Setup virtual env'
           command: |
-            virtualenv -p python3 /usr/local/share/virtualenvs/tap-zendesk
-            source /usr/local/share/virtualenvs/tap-zendesk/bin/activate
-            pip install .[dev]
+            python3 -m venv ./virtualenvs/tap-zendesk
+            . ./virtualenvs/tap-zendesk/bin/activate
+            pip3 install --upgrade pip
+            pip3 install -e .[test]
+
       - run:
-          name: 'pylint'
+          name: 'Pylinting'
           command: |
-            source /usr/local/share/virtualenvs/tap-zendesk/bin/activate
-            make test
-      - add_ssh_keys
+            . ./virtualenvs/tap-zendesk/bin/activate
+            pylint --rcfile .pylintrc tap_zendesk/
+
       - run:
-          name: 'Integration Tests'
+          name: 'Unit Tests'
           command: |
-            aws s3 cp s3://com-stitchdata-dev-deployment-assets/environments/tap-tester/sandbox dev_env.sh
-            source dev_env.sh
-            source /usr/local/share/virtualenvs/tap-tester/bin/activate
-            run-a-test --tap=tap-zendesk \
-                       --target=target-stitch \
-                       --orchestrator=stitch-orchestrator \
-                       --email=harrison+sandboxtest@stitchdata.com \
-                       --password=$SANDBOX_PASSWORD \
-                       --client-id=50 \
-                       tap_tester.suites.zendesk
+            . ./virtualenvs/tap-zendesk/bin/activate
+            export LOGGING_CONF_FILE=./sample_logging.conf
+            nosetests -c .noserc tests
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
