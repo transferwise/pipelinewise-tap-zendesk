@@ -1,4 +1,5 @@
 import datetime
+import os
 import sys
 import unittest
 
@@ -11,12 +12,13 @@ from singer import Catalog
 from tap_zendesk import do_sync
 from test.helper.zenpymock import ZenpyMock
 
+DIR = os.path.dirname(__file__)
 
 class DoSync(unittest.TestCase):
     def setUp(self):
-        self.catalog = Catalog.load('test_catalog.json')
+        self.catalog = Catalog.load(os.path.join(DIR, 'test_catalog.json'))
 
-        with open('test_state.json') as f:
+        with open(os.path.join(DIR, 'test_state.json')) as f:
             self.state = json.load(f)
 
         self.start_date = "2019-11-12T06:47:14.000000Z"
