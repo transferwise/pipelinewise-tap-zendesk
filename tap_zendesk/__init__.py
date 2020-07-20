@@ -195,16 +195,24 @@ def get_session(config):
     return session
 
 
-def get_internal_config():
-    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'internal_config.json')) as f:
+def get_default_config():
+    with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'default_config.json')) as f:
         config = json.loads(f.read())
+
+    return config
+
+def get_internal_config(user_config, default_config):
+    config = {}
+    for key in default_config.keys():
+        config[key] = user_config.get(key, default_config[key])
 
     return config
 
 @singer.utils.handle_top_exception(LOGGER)
 def main():
-    internal_config = get_internal_config()
+    default_config = get_default_config()
     parsed_args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
+    internal_config = get_internal_config(parsed_args.config, default_config)
 
     # OAuth has precedence
     creds = oauth_auth(parsed_args) or api_token_auth(parsed_args)
