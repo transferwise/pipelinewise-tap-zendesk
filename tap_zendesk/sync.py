@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name,missing-function-docstring,missing-class-docstring
 import json
 from zenpy.lib.api_objects import BaseObject
 from zenpy.lib.proxy import ProxyList
@@ -56,6 +57,6 @@ class ZendeskEncoder(json.JSONEncoder):
                 if callable(v):
                     obj_dict.pop(k)
             return obj_dict
-        elif isinstance(obj, ProxyList):
+        if isinstance(obj, ProxyList):
             return obj.copy()
         return json.JSONEncoder.default(self, obj)
