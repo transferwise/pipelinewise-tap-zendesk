@@ -2,8 +2,11 @@
 
 from setuptools import setup
 
-setup(name='tap-zendesk',
-      version='1.4.7',
+with open('README.md', 'r') as fh:
+    long_description = fh.read()
+
+setup(name='pipelinewise-tap-zendesk',
+      version='1.2.0',
       description='Singer.io tap for extracting data from the Zendesk API',
       long_description=long_description,
       long_description_content_type='text/markdown',
