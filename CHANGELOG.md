@@ -1,5 +1,10 @@
 # Changelog
 
+1.2.1 (2020-07-23)
+------------------
+
+- Use `start_time` query parameter for satisfaction_ratings stream
+
 1.2.0 (2020-07-20)
 ------------------
 
