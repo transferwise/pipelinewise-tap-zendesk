@@ -214,9 +214,6 @@ def get_internal_config(user_config, default_config):
 def main():
     default_config = get_default_config()
     parsed_args = singer.utils.parse_args(REQUIRED_CONFIG_KEYS)
-    LOGGER.info("HERE")
-    LOGGER.info(parsed_args.config)
-    LOGGER.info("AFTER")
     internal_config = get_internal_config(parsed_args.config, default_config)
 
     # OAuth has precedence

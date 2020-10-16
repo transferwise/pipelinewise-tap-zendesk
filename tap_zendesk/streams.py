@@ -495,6 +495,19 @@ class SLAPolicies(Stream):
         for policy in self.client.sla_policies():
             yield (self.stream, policy)
 
+class Calls(Stream):
+    name = "calls"
+    replication_method = "INCREMENTAL"
+    replication_key = "updated_at"
+
+    def sync(self, state):
+        bookmark = self.get_bookmark(state)
+        calls = self.client.talk.calls.incremental(start_time=bookmark)
+        for call in calls:
+            self.update_bookmark(state, call.updated_at)
+            yield (self.stream, call)
+
+
 STREAMS = {
     "tickets": Tickets,
     "groups": Groups,
@@ -510,4 +523,5 @@ STREAMS = {
     "tags": Tags,
     "ticket_metrics": TicketMetrics,
     "sla_policies": SLAPolicies,
+    "calls": Calls,
 }
