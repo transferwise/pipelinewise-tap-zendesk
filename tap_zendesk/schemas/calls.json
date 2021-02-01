@@ -179,6 +179,12 @@
                 "string"
             ]
         },
+        "phone_number_id": {
+            "type": [
+                "null",
+                "integer"
+            ]
+        },
         "quality_issues": {
             "type": [
                 "null",
