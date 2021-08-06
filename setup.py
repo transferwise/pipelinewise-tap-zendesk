@@ -16,14 +16,14 @@ setup(name='pipelinewise-tap-zendesk',
       py_modules=['tap_zendesk'],
       install_requires=[
           'pipelinewise-singer-python==1.*',
-          'zenpy==2.0.0',
+          'zenpy==2.0.24',
       ],
       extras_require={
           'test': [
-              'ipdb',
-              'pylint',
-              'nose',
-              'nose-watch',
+              'ipdb==0.13.*',
+              'pylint==2.9.*',
+              'pytest==6.2.*',
+              'pytest-cov==2.12.*',
           ]
       },
       entry_points='''
