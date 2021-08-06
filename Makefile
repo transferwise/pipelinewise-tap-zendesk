@@ -10,4 +10,4 @@ pylint:
 
 unit_test:
 	. ./venv/bin/activate ;\
-	nosetests -c .noserc test
+	pytest -v tests --cov tap_zendesk --cov-fail-under=67
