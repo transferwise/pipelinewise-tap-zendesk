@@ -22,7 +22,7 @@ setup(name='pipelinewise-tap-zendesk',
           'test': [
               'ipdb==0.13.*',
               'pylint==2.9.*',
-              'pytest==6.2.*',
+              'pytest>=6.2,<7.4',
               'pytest-cov==2.12.*',
           ]
       },
