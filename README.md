@@ -1,10 +1,17 @@
+# Notice
+To better serve Wise business and customer needs, the PipelineWise codebase needs to shrink.
+We have made the difficult decision that, going forward many components of PipelineWise will be removed or incorporated in the main repo.
+The last version before this decision is [v0.64.1](https://github.com/transferwise/pipelinewise/tree/v0.64.1)
+
+We thank all in the open-source community, that over the past 6 years, have helped to make PipelineWise a robust product for heterogeneous replication of many many Terabytes, daily
+
 # Pipelinewise-tap-zendesk
 
 [![PyPI version](https://badge.fury.io/py/pipelinewise-tap-zendesk.svg)](https://badge.fury.io/py/pipelinewise-tap-zendesk)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pipelinewise-tap-zendesk.svg)](https://pypi.org/project/pipelinewise-tap-zendesk/)
 [![License: MIT](https://img.shields.io/badge/License-GPLv3-yellow.svg)](https://opensource.org/licenses/GPL-3.0)
 
-[Singer](https://www.singer.io/) tap that extracts data from a Zendesk API and produces JSON-formatted data following 
+[Singer](https://www.singer.io/) tap that extracts data from a Zendesk API and produces JSON-formatted data following
 the [Singer spec](https://github.com/singer-io/getting-started/blob/master/docs/SPEC.md).
 
 This is a [PipelineWise](https://transferwise.github.io/pipelinewise) compatible tap connector.
